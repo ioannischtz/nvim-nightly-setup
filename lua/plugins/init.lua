@@ -4,7 +4,8 @@ vim.pack.add({
 	-- UI
 	{ src = "https://github.com/vague2k/vague.nvim" },
 	-- LSP
-	{ src = "https://github.com/yanganto/move.vim" },
+	{ src = "https://github.com/OXY2DEV/markview.nvim" },
+	{ src = "https://github.com/yanganto/move.vim", branch = "sui-move" },
 	-- Format
 	{ src = "https://github.com/stevearc/conform.nvim" },
 	-- Other
@@ -84,10 +85,46 @@ end, { desc = "Toggle comment for selection" })
 -- vim.keymap.set("x", "<leader>/", "<Plug>(comment_toggle_linewise_visual)", { desc = "Comment operator visual" })
 
 -- Treesitter highlight
+
+local markview = require("markview")
+markview.setup({
+	experimental = { check_rtp_message = false },
+})
+
 pcall(function()
-	require("nvim-treesitter.configs").setup({
-		highlight = { enable = true },
+	local configs = require("nvim-treesitter.configs")
+	local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+	-- local parser_install_dir = vim.fn.stdpath("data") .. "/tree-sitter-parsers"
+
+	configs.setup({
+		modules = {},
+		ignore_install = {},
+		sync_install = false,
+		auto_install = true,
+		highlight = { enable = true, disable = { "gitcommit" } },
 		-- Keep this tiny, you can add more langs later
-		ensure_installed = { "lua", "vim", "vimdoc", "query" },
+		ensure_installed = {
+			"lua",
+			"vim",
+			"vimdoc",
+			"query",
+			"markdown",
+			"markdown_inline",
+			"rust",
+			"tsx",
+			"typescript",
+		},
 	})
+
+	parsers["move"] = {
+		install_info = {
+			url = "/home/ion-hz/Dev/sui/sui/external-crates/move/tooling/tree-sitter",
+			files = { "src/parser.c" },
+			branch = "main",
+			generate_requires_npm = false,
+			requires_generate_from_grammar = false,
+		},
+		filetype = "move",
+		maintainers = { "@MystenLabs" },
+	}
 end)

@@ -23,12 +23,12 @@ map("n", "<C-S>", ":wa<cr>", { desc = "Save all files" })
 -- BUffers
 map("n", "<leader>c", ":bd<cr>", { desc = "Close the current buffer" })
 map("n", "<leader>C", ":bufdo :bd<cr>", { desc = "Close all buffers" })
-map(
-	"n",
-	"leader>bc",
-	":bufdo if bufmr('%') !=bufnr('#') | bd | endif<cr>",
-	{ desc = "Close all buffers except the current one" }
-)
+-- map(
+-- 	"n",
+-- 	"leader>bc",
+-- 	":bufdo if bufmr('%') !=bufnr('#') | bd | endif<cr>",
+-- 	{ desc = "Close all buffers except the current one" }
+-- )
 
 -- Tabs
 map("n", "<leader>tc", ":tabclose<cr>", { desc = "Close the current tab" })

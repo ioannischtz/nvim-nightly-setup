@@ -32,7 +32,7 @@ au("LspAttach", {
 		local bufnr = args.buf
 		vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-		local map = function(mode, lhs, rhs, dsc)
+		local map = function(mode, lhs, rhs, desc)
 			vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 		end
 
@@ -43,8 +43,12 @@ au("LspAttach", {
 		map("n", "gr", vim.lsp.buf.references, "References")
 		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
 		map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-		map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
-		map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+		map("n", "[d", function()
+			vim.diagnostic.jump({ count = 1 })
+		end, "Prev diagnostic")
+		map("n", "]d", function()
+			vim.diagnostic.jump({ count = -1 })
+		end, "Next diagnostic")
 		-- map("n", "<leader>lf",  function(args) require("conform").format({ bufnr = args.buf, lsp_fallback = true }) end, "Format buffer")
 
 		-- autocomplete

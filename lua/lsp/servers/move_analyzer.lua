@@ -12,7 +12,12 @@
 ---
 --- See [`move-analyzer`'s doc](https://github.com/move-language/move/blob/1b258a06e3c7d2bc9174578aac92cca3ac19de71/language/move-analyzer/editors/code/README.md#how-to-install) for details.
 return {
-	cmd = { "move-analyzer" },
+	cmd = { "/home/ion-hz/.cargo/bin/move-analyzer" },
 	filetypes = { "move" },
 	root_markers = { "Move.toml" },
+	settings = {
+		["move-analyzer"] = {
+			cmd = { "/home/ion-hz/.cargo/bin/move-analyzer" },
+		},
+	},
 }
